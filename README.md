@@ -146,7 +146,7 @@ ENV.pipeline {
 
 When *ember-cli-deploy-ssh-index* uploads a file to a remote host, it uploads it under the key defined by a combination of the two config properties `filePattern` and `revisionKey`.
 
-So, if the `filePattern` was configured to be `index.html` and there had been a few revisons deployed, then `remoteDir` on your remote hostmight look something like this:
+So, if the `filePattern` was configured to be `index.html` and there had been a few revisons deployed, then `remoteDir` on your remote host might look something like this:
 
 ```bash
 $ ls <remoteDir>
