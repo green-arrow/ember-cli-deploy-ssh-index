@@ -1,3 +1,5 @@
+**NOTE** This addon is currently under development and IS NOT fully functional yet. Once it is fully functional, a release will be published to NPM. Use at your own risk.
+
 # ember-cli-deploy-ssh-index
 
 > An ember-cli-deploy plugin to upload revisions to a remote server via SSH
@@ -5,6 +7,8 @@
 [![](https://ember-cli-deploy.github.io/ember-cli-deploy-version-badges/plugins/ember-cli-deploy-ssh-index.svg)](http://ember-cli-deploy.github.io/ember-cli-deploy-version-badges/)
 
 This plugin uploads a file, presumably index.html, to a specified folder on a remote server via SSH.
+
+This plugin is heavily based on [ember-cli-deploy-s3-index](https://github.com/ember-cli-deploy/ember-cli-deploy-s3-index) and [ember-cli-deploy-ssh](https://github.com/eddflrs/ember-cli-deploy-ssh)
 
 ## What is an ember-cli-deploy plugin?
 
