@@ -68,7 +68,7 @@ For detailed information on how configuration of plugins works, please refer to 
 
 ### allowOverwrite
 
-A flag to specify whether the revision should be overwritten if it already exists in S3.
+A flag to specify whether the revision should be overwritten if it already exists on the remote host.
 
 ### username (`required`)
 
