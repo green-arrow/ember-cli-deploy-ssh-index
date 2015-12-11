@@ -102,7 +102,7 @@ The path to the private key to use when connecting to the remote host. This **mu
 
 ### filePattern (`required`)
 
-A file matching this pattern will be uploaded to your remote host. The active revision on the host will match `filePattern`. The versioned keys will have `revisionKey` appended (Ex: `index::39a2f02.html`).
+A file matching this pattern will be uploaded to your remote host. The active revision on the host will match `filePattern`. The versioned keys will have `revisionKey` appended (Ex: `index.html:39a2f02`).
 
 *Default:* `'index.html'`
 
