@@ -2,7 +2,7 @@
 
 > An ember-cli-deploy plugin to upload revisions to a remote server via SSH
 
-[![](https://ember-cli-deploy.github.io/ember-cli-deploy-version-badges/plugins/ember-cli-deploy-ssh-index.svg)](http://ember-cli-deploy.github.io/ember-cli-deploy-version-badges/)
+[![Build Status](https://travis-ci.org/green-arrow/ember-cli-deploy-ssh-index.svg?branch=master)](https://travis-ci.org/green-arrow/ember-cli-deploy-ssh-index) [![](https://ember-cli-deploy.github.io/ember-cli-deploy-version-badges/plugins/ember-cli-deploy-ssh-index.svg)](http://ember-cli-deploy.github.io/ember-cli-deploy-version-badges/)
 
 This plugin uploads a file, presumably index.html, to a specified folder on a remote server via SSH.
 
