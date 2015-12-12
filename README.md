@@ -118,7 +118,7 @@ The root directory where the file matching `filePattern` will be searched for. B
 
 #### revisionKey
 
-The unique revision number for the version of the file being uploaded to S3. By default this option will use either the `revisionKey` passed in from the command line or the `revisionKey` property from the deployment context.
+The unique revision number for the version of the file being uploaded to the remote host. By default this option will use either the `revisionKey` passed in from the command line or the `revisionKey` property from the deployment context.
 
 *Default:* `context.commandLineArgs.revisionKey || context.revisionKey`
 
