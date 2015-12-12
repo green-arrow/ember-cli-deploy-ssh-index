@@ -1,5 +1,3 @@
-**NOTE** This addon is currently under development and IS NOT fully functional yet. Once it is fully functional, a release will be published to NPM. Use at your own risk.
-
 # ember-cli-deploy-ssh-index
 
 > An ember-cli-deploy plugin to upload revisions to a remote server via SSH
@@ -66,53 +64,59 @@ For detailed information on what plugin hooks are and how they work, please refe
 
 For detailed information on how configuration of plugins works, please refer to the [Plugin Documentation][1].
 
-### allowOverwrite
+### Required configuration options
 
-A flag to specify whether the revision should be overwritten if it already exists on the remote host.
-
-### username (`required`)
-
-The username to use when connecting to the remote host.
-
-*Default:* `undefined`
-
-### host (`required`)
-
-The remote host to which the revision will be deployed.
-
-*Default:* `undefined`
-
-### port (`required`)
-
-The port of the remote host.
-
-*Default:* `22`
-
-### remoteDir (`required`)
-
-The directory on the remote host to which the revision will be deployed.
-
-*Default:* `undefined`
-
-### privateKeyFile (`required`)
-
-The path to the private key to use when connecting to the remote host. This **must** be an absolute path (not relative like `~/.ssh/id_rsa`).
-
-*Default:* `undefined`
-
-### filePattern (`required`)
+#### filePattern (`required`)
 
 A file matching this pattern will be uploaded to your remote host. The active revision on the host will match `filePattern`. The versioned keys will have `revisionKey` appended (Ex: `index.html:39a2f02`).
 
 *Default:* `'index.html'`
 
-### distDir
+#### host (`required`)
+
+The remote host to which the revision will be deployed.
+
+*Default:* `undefined`
+
+#### port (`required`)
+
+The port of the remote host.
+
+*Default:* `22`
+
+#### privateKeyFile (`required`)
+
+The path to the private key to use when connecting to the remote host. This **must** be an absolute path (not relative like `~/.ssh/id_rsa`).
+
+*Default:* `undefined`
+
+#### remoteDir (`required`)
+
+The directory on the remote host to which the revision will be deployed.
+
+*Default:* `undefined`
+
+#### username (`required`)
+
+The username to use when connecting to the remote host.
+
+*Default:* `undefined`
+
+### Optional configuration options
+
+#### allowOverwrite
+
+A flag to specify whether the revision should be overwritten if it already exists on the remote host.
+
+*Default:* `false`
+
+#### distDir
 
 The root directory where the file matching `filePattern` will be searched for. By default, this option will use the `distDir` property of the deployment context.
 
 *Default:* `context.distDir`
 
-### revisionKey
+#### revisionKey
 
 The unique revision number for the version of the file being uploaded to S3. By default this option will use either the `revisionKey` passed in from the command line or the `revisionKey` property from the deployment context.
 
@@ -149,17 +153,18 @@ When *ember-cli-deploy-ssh-index* uploads a file to a remote host, it uploads it
 So, if the `filePattern` was configured to be `index.html` and there had been a few revisons deployed, then `remoteDir` on your remote host might look something like this:
 
 ```bash
-$ ls <remoteDir>
-2015-09-27 07:47:42       1207 index.html
-2015-09-27 07:25:51       1207 index.html:a644ba43cdb987288d646c5a97b1c8a9
-2015-09-27 07:20:27       1207 index.html:61cfff627b79058277e604686197bbbd
-2015-09-27 07:19:11       1207 index.html:9dd26dbc8f3f9a8a342d067335315a63
+$ ls -l <remoteDir>
+-rw-rw-r-- 1 ec2-user ec2-user     1 Dec 10 22:45 a644ba4.active-revision
+-rw-rw-r-- 1 ec2-user ec2-user 22616 Dec 10 22:45 index.html
+-rw-rw-r-- 1 ec2-user ec2-user 22616 Dec 10 22:45 index.html:a644ba4
+-rw-rw-r-- 1 ec2-user ec2-user 22616 Dec  8 05:38 index.html:61cfff6
+-rw-rw-r-- 1 ec2-user ec2-user 22616 Dec  1 10:22 index.html:9dd26db
 ```
 
-Activating a revision would copy the content of the passed revision to `index.html` which would be served up by a web server (such as Nginx) on your remote host.
+Activating a revision would copy the content of the passed revision to `index.html` which would be served up by a web server (such as Nginx) on your remote host. Additionally, it creates
 
 ```bash
-$ ember deploy:activate --revision a644ba43cdb987288d646c5a97b1c8a9
+$ ember deploy:activate --revision a644ba4
 ```
 
 ### When does activation occur?

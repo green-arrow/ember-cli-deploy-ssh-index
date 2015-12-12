@@ -1,8 +1,6 @@
 /* jshint node: true */
 'use strict';
-
 var path             = require('path');
-var Promise          = require('ember-cli/lib/ext/promise');
 var DeployPluginBase = require('ember-cli-deploy-plugin');
 var Ssh              = require('./lib/ssh');
 
@@ -40,11 +38,12 @@ module.exports = {
         var port           = this.readConfig('port');
         var remoteDir      = this.readConfig('remoteDir');
         var privateKeyFile = this.readConfig('privateKeyFile');
+        var filePath       = path.join(distDir, filePattern);
 
         var options = {
           allowOverwrite: allowOverwrite,
           filePattern: filePattern,
-          distDir: distDir,
+          filePath: filePath,
           revisionKey: revisionKey,
           username: username,
           host: host,
@@ -53,16 +52,31 @@ module.exports = {
           privateKeyFile: privateKeyFile
         };
 
-        this.log('Preparing to upload revision to remote host: `' +
-          username + '@' + host + ':' + port + '/' + remoteDir + '`',
-          { verbose: true });
-
         var ssh = new Ssh({ plugin: this });
         return ssh.upload(options);
       },
 
       activate: function(context) {
+        var filePattern    = this.readConfig('filePattern');
+        var revisionKey    = this.readConfig('revisionKey');
+        var username       = this.readConfig('username');
+        var host           = this.readConfig('host');
+        var port           = this.readConfig('port');
+        var remoteDir      = this.readConfig('remoteDir');
+        var privateKeyFile = this.readConfig('privateKeyFile');
 
+        var options = {
+          filePattern: filePattern,
+          revisionKey: revisionKey,
+          username: username,
+          host: host,
+          port: port,
+          remoteDir: remoteDir,
+          privateKeyFile: privateKeyFile
+        };
+
+        var ssh = new Ssh({ plugin: this });
+        return ssh.activate(options);
       },
 
       fetchRevisions: function(context) {
