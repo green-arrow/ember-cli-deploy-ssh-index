@@ -161,11 +161,13 @@ $ ls -l <remoteDir>
 -rw-rw-r-- 1 ec2-user ec2-user 22616 Dec  1 10:22 index.html:9dd26db
 ```
 
-Activating a revision would copy the content of the passed revision to `index.html` which would be served up by a web server (such as Nginx) on your remote host. Additionally, it creates
+Activating a revision would copy the content of the passed revision to `index.html` which would be served up by a web server (such as Nginx) on your remote host. Activating one of the revisions above would look like this:
 
 ```bash
 $ ember deploy:activate --revision a644ba4
 ```
+
+Additionally, activation creates an empty file where the filename is the revision key, with an extension of `.active-revision`. This is what is used to determine the currently active revision on the remote host. On activation, all previous `.active-revision` files are removed and a new one is created, based on the revision being activated.
 
 ### When does activation occur?
 
