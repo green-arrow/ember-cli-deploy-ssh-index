@@ -129,7 +129,7 @@ A user can activate a revision by either:
 - Passing a command line argument to the `deploy` command:
 
 ```bash
-$ ember deploy --activate=true
+$ ember deploy staging --activate
 ```
 
 - Running the `deploy:activate` command:
