@@ -86,7 +86,8 @@ The port of the remote host.
 
 #### privateKeyFile (`required`)
 
-The path to the private key to use when connecting to the remote host. This **must** be an absolute path (not relative like `~/.ssh/id_rsa`).
+The path to the private key to use when connecting to the remote host.
+Ex: `'~/.ssh/id_rsa'`
 
 *Default:* `undefined`
 
