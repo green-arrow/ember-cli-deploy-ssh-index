@@ -117,6 +117,23 @@ The root directory where the file matching `filePattern` will be searched for. B
 
 *Default:* `context.distDir`
 
+#### passphrase
+
+The passphrase used to protect your `privateKeyFile`.
+
+For security, this should be passed in via an environment variable.
+
+```javascript
+{
+  'ssh-index': {
+    // Other configuration...
+    passphrase: process.env.PRIVATE_KEY_PASSPHRASE
+  }
+}
+```
+
+*Default:* `undefined`
+
 #### revisionKey
 
 The unique revision number for the version of the file being uploaded to the remote host. By default this option will use either the `revisionKey` passed in from the command line or the `revisionKey` property from the deployment context.
