@@ -38,6 +38,8 @@ module.exports = {
         var port           = this.readConfig('port');
         var remoteDir      = this.readConfig('remoteDir');
         var privateKeyFile = this.readConfig('privateKeyFile');
+        var passphrase     = this.readConfig('passphrase');
+        var agent          = this.readConfig('agent');
         var filePath       = path.join(distDir, filePattern);
 
         var options = {
@@ -49,6 +51,8 @@ module.exports = {
           host: host,
           port: port,
           remoteDir: remoteDir,
+          passphrase: passphrase,
+          agent: agent,
           privateKeyFile: privateKeyFile
         };
 
@@ -63,6 +67,8 @@ module.exports = {
         var host           = this.readConfig('host');
         var port           = this.readConfig('port');
         var remoteDir      = this.readConfig('remoteDir');
+        var passphrase     = this.readConfig('passphrase');
+        var agent          = this.readConfig('agent');
         var privateKeyFile = this.readConfig('privateKeyFile');
 
         var options = {
@@ -72,6 +78,8 @@ module.exports = {
           host: host,
           port: port,
           remoteDir: remoteDir,
+          passphrase: passphrase,
+          agent: agent,
           privateKeyFile: privateKeyFile
         };
 
@@ -85,6 +93,8 @@ module.exports = {
         var host           = this.readConfig('host');
         var port           = this.readConfig('port');
         var remoteDir      = this.readConfig('remoteDir');
+        var passphrase     = this.readConfig('passphrase');
+        var agent          = this.readConfig('agent');
         var privateKeyFile = this.readConfig('privateKeyFile');
 
         var options = {
@@ -93,6 +103,8 @@ module.exports = {
           host: host,
           port: port,
           remoteDir: remoteDir,
+          passphrase: passphrase,
+          agent: agent,
           privateKeyFile: privateKeyFile
         };
 
