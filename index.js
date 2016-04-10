@@ -15,6 +15,7 @@ module.exports = {
         allowOverwrite: false,
         filePattern: 'index.html',
         port: 22,
+        privateKeyFile: null,
         agent: null,
         passphrase: null,
         distDir: function(context) {
@@ -26,7 +27,7 @@ module.exports = {
         }
       },
 
-      requiredConfig: ['username', 'host', 'port', 'remoteDir', 'privateKeyFile'],
+      requiredConfig: ['username', 'host', 'port', 'remoteDir'],
 
       upload: function(context) {
         var allowOverwrite = this.readConfig('allowOverwrite');
