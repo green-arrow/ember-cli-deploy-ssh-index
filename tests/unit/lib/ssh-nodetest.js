@@ -1,18 +1,23 @@
-var assert = require('ember-cli/tests/helpers/assert');
-var path   = require('path');
+const chai = require('chai');
+const path = require('path');
+const chaiAsPromised = require("chai-as-promised");
+
+chai.use(chaiAsPromised);
+
+const assert = chai.assert;
 
 describe('ssh', function() {
-  var Ssh, mockUi, plugin, subject, options;
+  let  Ssh, mockUi, plugin, subject, options, mockSftpStream, mockSftp, mockSsh2;
 
-  var date1 = new Date('December 11, 2015 01:00:00');
-  var date2 = new Date('December 11, 2015 02:00:00');
+  let date1 = new Date('December 11, 2015 01:00:00');
+  let date2 = new Date('December 11, 2015 02:00:00');
 
   before(function() {
     Ssh = require('../../../lib/ssh');
   });
 
   beforeEach(function() {
-    remoteHostFileList = [
+    let remoteHostFileList = [
       { filename: '123.active-revision', attrs: { mtime: date1.getTime() / 1000 } },
       { filename: 'test.html',           attrs: { mtime: date1.getTime() / 1000 } },
       { filename: 'test.html:123',       attrs: { mtime: date1.getTime() / 1000 } },
@@ -31,10 +36,11 @@ describe('ssh', function() {
       ui: mockUi,
       readConfig: function(propertyName) {
         if (propertyName === 's3Client') {
-          return s3Client;
+          let s3Client = propertyName;
+          return s3Client
         }
       },
-      log: function(message, opts) {
+      log: function(message) {
         this.ui.write('|    ');
         this.ui.writeLine('- ' + message);
       }
@@ -82,15 +88,15 @@ describe('ssh', function() {
   });
 
   describe('#upload', function() {
-    var ssh2Params;
-    var filePattern = 'test.html';
-    var revisionKey = 'some-revision-key';
-    var username    = 'some-username';
-    var host        = 'some-host';
-    var remoteDir   = '/directory';
-    var agent       = 'some-agent';
-    var passphrase  = 'some-passphrase';
-    var dummyFile   = 'tests/unit/fixtures/test.html';
+    let ssh2Params;
+    let filePattern = 'test.html';
+    let revisionKey = 'some-revision-key';
+    let username    = 'some-username';
+    let host        = 'some-host';
+    let remoteDir   = '/directory';
+    let agent       = 'some-agent';
+    let passphrase  = 'some-passphrase';
+    let dummyFile   = 'tests/unit/fixtures/test.html';
 
     beforeEach(function() {
       options = {
@@ -113,11 +119,11 @@ describe('ssh', function() {
     });
 
     it('resolves if upload succeeds', function() {
-      var promise = subject.upload(options);
+      let promise = subject.upload(options);
 
       return assert.isFulfilled(promise)
         .then(function() {
-          var expectLogOutput = '- ✔  ' + path.join(remoteDir, filePattern + ':' + revisionKey);
+          let expectLogOutput = '- ✔  ' + path.join(remoteDir, filePattern + ':' + revisionKey);
 
           assert.ok(mockUi.messages.length > 0, 'At least one line logged');
           assert.equal(mockUi.messages[mockUi.messages.length - 1], expectLogOutput,
@@ -130,19 +136,19 @@ describe('ssh', function() {
         this.events.error();
       }
 
-      var promise = subject.upload(options);
+      let promise = subject.upload(options);
 
       return assert.isRejected(promise);
     });
 
     it('ends the connection after uploading', function() {
-      var ended = false;
+      let ended = false;
 
       mockSsh2.end = function() {
         ended = true;
       }
 
-      var promise = subject.upload(options);
+      let promise = subject.upload(options);
 
       return assert.isFulfilled(promise)
         .then(function() {
@@ -152,13 +158,10 @@ describe('ssh', function() {
 
     it('passes expected parameters to the ssh2', function() {
 
-      var promise = subject.upload(options);
+      let promise = subject.upload(options);
 
       return assert.isFulfilled(promise)
         .then(function() {
-          var expectedKey = filePattern+':'+revisionKey;
-          var defaultACL  = 'public-read';
-
           assert.equal(ssh2Params.host, host, 'host passed correctly');
           assert.equal(ssh2Params.username, username, 'username passed correctly');
           assert.equal(ssh2Params.port, '22', 'port defaults correctly');
@@ -174,7 +177,7 @@ describe('ssh', function() {
       });
 
       it('rejects when trying to upload an already uploaded revision', function() {
-        var promise = subject.upload(options);
+        let promise = subject.upload(options);
 
         return assert.isRejected(promise);
       });
@@ -182,7 +185,7 @@ describe('ssh', function() {
       it('does not reject when allowOverwrite option is set to true', function() {
         options.allowOverwrite = true;
 
-        var promise = subject.upload(options);
+        let promise = subject.upload(options);
 
         return assert.isFulfilled(promise);
       });
@@ -190,13 +193,13 @@ describe('ssh', function() {
   });
 
   describe('#fetchRevisions', function() {
-    var filePattern = 'test.html';
-    var username    = 'some-username';
-    var host        = 'some-host';
-    var remoteDir   = '/directory';
-    var agent       = 'some-agent';
-    var passphrase  = 'some-passphrase';
-    var dummyFile   = 'tests/unit/fixtures/test.html';
+    let filePattern = 'test.html';
+    let username    = 'some-username';
+    let host        = 'some-host';
+    let remoteDir   = '/directory';
+    let agent       = 'some-agent';
+    let passphrase  = 'some-passphrase';
+    let dummyFile   = 'tests/unit/fixtures/test.html';
 
     beforeEach(function() {
       options = {
@@ -211,8 +214,8 @@ describe('ssh', function() {
     });
 
     it('returns an array of uploaded revisions in `{ revision: revisionKey, timestamp: timestamp, active: active }` format sorted by date in descending order', function() {
-      var promise = subject.fetchRevisions(options);
-      var expected = [
+      let promise = subject.fetchRevisions(options);
+      let expected = [
           { revision: '456', timestamp: date2, active: false },
           { revision: '123', timestamp: date1, active: true }
       ];
@@ -225,14 +228,14 @@ describe('ssh', function() {
   });
 
   describe('#activate', function() {
-    var executedCommands = []
-    var filePattern      = 'test.html';
-    var username         = 'some-username';
-    var host             = 'some-host';
-    var remoteDir        = '/directory';
-    var agent            = 'some-agent';
-    var passphrase       = 'some-passphrase';
-    var dummyFile        = 'tests/unit/fixtures/test.html';
+    let executedCommands = []
+    let filePattern      = 'test.html';
+    let username         = 'some-username';
+    let host             = 'some-host';
+    let remoteDir        = '/directory';
+    let agent            = 'some-agent';
+    let passphrase       = 'some-passphrase';
+    let dummyFile        = 'tests/unit/fixtures/test.html';
 
     beforeEach(function() {
       options = {
@@ -257,14 +260,14 @@ describe('ssh', function() {
       });
 
       it('resolves when passing an existing revisionKey', function() {
-        var promise = subject.activate(options);
+        let promise = subject.activate(options);
 
         return assert.isFulfilled(promise);
       });
 
       it('logs to the console when activation was successful', function() {
-        var promise = subject.activate(options);
-        var expectLogOutput = '- ✔  ' + path.join(remoteDir, filePattern + ':' + options.revisionKey) +
+        let promise = subject.activate(options);
+        let expectLogOutput = '- ✔  ' + path.join(remoteDir, filePattern + ':' + options.revisionKey) +
           ' => ' + path.join(remoteDir, filePattern);
 
         return assert.isFulfilled(promise)
@@ -282,7 +285,7 @@ describe('ssh', function() {
       });
 
       it('rejects when passing an non-existing revisionKey', function() {
-        var promise = subject.activate(options);
+        let promise = subject.activate(options);
 
         return assert.isRejected(promise);
       });
