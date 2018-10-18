@@ -28,7 +28,7 @@ module.exports = {
 
       requiredConfig: ['username', 'host', 'port', 'remoteDir'],
 
-      upload: function(context) {
+      upload() {
         var allowOverwrite = this.readConfig('allowOverwrite');
         var filePattern    = this.readConfig('filePattern');
         var distDir        = this.readConfig('distDir');
@@ -60,7 +60,7 @@ module.exports = {
         return ssh.upload(options);
       },
 
-      activate: function(context) {
+      activate() {
         var filePattern    = this.readConfig('filePattern');
         var revisionKey    = this.readConfig('revisionKey');
         var username       = this.readConfig('username');

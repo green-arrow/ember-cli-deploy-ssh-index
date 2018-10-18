@@ -5,12 +5,10 @@ module.exports = {
     sourceType: 'module'
   },
   plugins: [
-    'ember',
     'mocha'
   ],
   extends: [
-    'eslint:recommended',
-    'plugin:ember/recommended'
+    'eslint:recommended'
   ],
   env: {
     browser: true,
@@ -23,6 +21,7 @@ module.exports = {
     // node files
     {
       files: [
+        '.template-lintrc.js',
         'ember-cli-build.js',
         'index.js',
         'testem.js',
